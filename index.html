@@ -1,15 +1,420 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bu_ul_gyeong_solar</title>
+    <title>(유)부울경태양광 | 부울경 태양광솔루션 전문기업</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
     <!-- css -->
     <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-gray-50 relative">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent text-white">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Left: Logo -->
+            <a href="#" class="flex items-center gap-2 text-2xl font-bold tracking-tighter">
+                <img src="img/solar-icon.png" alt="company-icon" id="company_icon">
+                <span class="logo-text">(유)부울경태양광</span>
+            </a>
+
+            <!-- Center: Menu (Desktop) -->
+            <div class="hidden md:flex space-x-8 text-lg font-medium items-center nav-links">
+                <a href="#about" class="hover:text-yellow-400 transition">회사소개</a>
+                <a href="#info" class="hover:text-yellow-400 transition">사업소개</a>
+                <a href="#system" class="hover:text-yellow-400 transition">운영 및 수익구조</a>
+                <a href="#place" class="hover:text-yellow-400 transition">오시는길</a>
+                <a href="#contact" class="hover:text-yellow-400 transition">문의하기</a>
+            </div>
+
+            <!-- Right: Plus Button & Burger -->
+            <div class="flex items-center gap-4">
+                <div class="relative hidden md:block">
+                    <button id="plusBtn"
+                        class="w-10 h-10 rounded-full border border-current flex items-center justify-center hover:bg-white hover:text-black transition focus:outline-none">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <!-- Dropdown -->
+                    <div id="dropdownMenu"
+                        class="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-lg shadow-xl py-2 hidden opacity-0 transition-opacity duration-300 transform origin-top-right">
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">로그인</a>
+                        <a href="#contact" onclick="switchTab('my-inquiry')"
+                            class="block px-4 py-2 hover:bg-gray-100">내문의글</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">한/영 (Language)</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">회사사이트</a>
+                    </div>
+                </div>
+                <!-- Burger Icon (Mobile) -->
+                <button id="burgerBtn" class="md:hidden text-2xl focus:outline-none">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- [NEW] Desktop Aside (Quick Menu) -->
+    <!-- 반응형: lg 이상일 때만 보임, 그 이하는 hidden -->
+    <aside
+        class="hidden lg:flex fixed left-6 top-1/2 transform -translate-y-1/2 z-40 flex-col gap-4 w-48 bg-white/90 backdrop-blur-sm p-5 rounded-2xl shadow-xl border border-gray-100 text-center transition-all duration-300">
+        <div class="flex flex-col items-center gap-2 border-b border-gray-200 pb-4">
+            <h4 class="font-bold text-gray-800">견적문의</h4>
+            <hr>
+            <h4 class="font-bold text-gray-800">이장춘</h4>
+            <a href="tel:01066754804" class="text-blue-600 font-medium text-sm hover:underline items-left flex gap-1">
+                <i class="fa-solid fa-phone"></i>010-3675-4804
+            </a>
+            <p class="text-sm text-gray-500 font-medium">@bu_ul_gyeong_solar</p>
+        </div>
+        <button onclick="goToContact()"
+            class="w-full bg-blue-600 text-white text-sm font-bold py-2 rounded-lg hover:bg-blue-700 transition shadow-md">
+            문의하기
+        </button>
+    </aside>
+
+    <!-- Mobile Sidebar -->
+    <div id="mobileMenu" class="fixed inset-0 z-[60] pointer-events-none">
+        <div id="mobileOverlay"
+            class="absolute inset-0 bg-black bg-opacity-50 opacity-0 transition-opacity duration-300 pointer-events-auto hidden">
+        </div>
+        <div id="sidebar"
+            class="absolute right-0 top-0 h-full w-72 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 pointer-events-auto flex flex-col overflow-y-auto">
+            <div class="p-5 flex justify-end">
+                <button id="closeSidebar" class="text-2xl text-gray-600">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu Links -->
+            <div class="flex flex-col px-6 gap-6 text-lg font-medium text-gray-800 mb-6">
+                <a href="#about" class="hover:text-blue-600 mobile-link">회사소개</a>
+                <a href="#info" class="hover:text-blue-600 mobile-link">사업소개</a>
+                <a href="#system" class="hover:text-blue-600 mobile-link">운영 및 수익구조</a>
+                <a href="#place" class="hover:text-blue-600 mobile-link">오시는길</a>
+                <a href="#contact" class="hover:text-blue-600 mobile-link">문의하기</a>
+                <a href="#contact" onclick="switchTab('my-inquiry')" class="hover:text-blue-600 mobile-link">내문의글</a>
+            </div>
+
+            <!-- [NEW] Mobile Aside Content (하단에 배치) -->
+            <div class="mt-auto bg-gray-50 p-6 border-t border-gray-100">
+                <div class="items-center gap-4 mb-4">
+                    <h4 class="font-bold text-gray-800">견적문의</h4>
+                    <hr>
+                    <h4 class="font-bold text-gray-800">이장춘</h4>
+                    <a href="tel:01066754804"
+                        class="text-sm text-gray-500 font-medium hover:text-blue-600 transition flex items-center gap-1">
+                        <i class="fa-solid fa-phone"></i>010-3675-4804
+                    </a>
+                    <p class="text-sm text-gray-500 font-medium">@bu_ul_gyeong_solar</p>
+                </div>
+                <div class="flex flex-col gap-2 text-sm text-gray-500">
+                    <a href="#" class="flex items-center gap-2"><i class="fa-solid fa-globe"></i> Language</a>
+                    <a href="#" class="flex items-center gap-2"><i class="fa-solid fa-building"></i> 회사사이트</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1. 회사소개 -->
+    <section id="about" class="relative w-full h-[33vh] min-h-[300px] flex items-center justify-center overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+            alt="Nature Solar" class="absolute inset-0 w-full h-full object-cover z-0">
+        <div class="absolute inset-0 bg-black bg-opacity-40 z-10"></div>
+        <div class="relative z-20 text-center text-white px-4">
+            <h1 class="text-3xl md:text-5xl font-bold mb-4 drop-shadow-lg leading-tight">부산, 울산, 경상도지역의 최적의 태양광 인프라 솔루션
+            </h1>
+            <p class="text-base md:text-xl font-light opacity-90 max-w-2xl mx-auto">공장지붕형 태양광 패널설치 및 운영을 연결해주는 업체입니다.
+            </p>
+        </div>
+    </section>
+
+    <!-- 2. 홍보문구 -->
+    <section id="future" class="py-16 bg-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-black-800 mb-8">부울경 기업형 태양광 산업의 최적의 파트너!</h2>
+            <h4 class="text-gray-600 leading-relaxed max-w-3xl mx-auto text-lg whitespace-pre-line">
+                공장 지붕으로 10년간 수익을 얻고, 이후에는 무료로 전기를 쓸 수 있다면 어떨까요?
+            </h4>
+            <h4 class="text-gray-600 leading-relaxed max-w-3xl mx-auto text-lg whitespace-pre-line">
+                아무것도 하지 않던 지붕이 매달 수익을 만드는 자산이 됩니다!
+            </h4>
+            <h4 class="text-gray-600 leading-relaxed max-w-3xl mx-auto text-lg whitespace-pre-line">
+                20년간 임대수익 + 계약종료 후 꾸준한 내수익이 되는 구조!
+            </h4>
+        </div>
+    </section>
+
+    <!-- 3. 사업소개 -->
+    <section id="info" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">사업소개</h2>
+            <div id="container" class="flex justify-center gap-6">
+                <img id="about_img1" src="img/about-img1.png" alt="about1">
+            </div>
+        </div>
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12 mt-12">이런 분들에게 추천드립니다!</h2>
+            <div id="container" class="flex justify-center gap-6">
+                <img id="about_img2" src="img/about-img2-one.png" alt="about2">
+            </div>
+            <div id="container" class="flex justify-center mb-5 mt-5 gap-6">
+                <img id="about_img4" src="img/about_img4.jpg" alt="about4">
+            </div>
+        </div>
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12 mt-12">믿을수 있는 기업 SK와 태양광 전력시장의 넘버원 솔라원이 함께합니다!
+            </h2>
+            <div id="container" class="flex justify-center gap-6">
+                <img id="brand-img" src="img/brand-img2.png" alt="brand-img">
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. 운영 및 수익구조 -->
+    <section id="system" class="py-16 bg-gray-50">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">운영 및 수익구조</h2>
+        <div id="container" class="flex justify-center mb-5 gap-6">
+            <img id="about_img1" src="img/about_img5.png" alt="about5">
+        </div>
+
+        <h4 class="text-3xl font-bold text-center text-black mb-4">면적 당 전력생산 가격(kw)</h4>
+
+        <div id="container" class="flex justify-center bg-gray-100 mt-5 mb-5 gap-6">
+            <table class="table table-stripe text-center">
+            <colgroup>
+                <col style="width: 150px;">
+                <col style="width: 150px;">
+                <col style="width: 150px;">
+                <col style="width: 150px;">
+                <col style="width: 150px;">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>no.</th>
+                    <th>title</th>
+                    <th>content</th>
+                    <th>view</th>
+                    <th>count</th>
+                </tr>                
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>test title</td>
+                    <td>test content...</td>
+                    <td>1000+</td>
+                    <td>123456</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        
+    </section>
+
+    <!-- 4. 시공현황 -->
+    <!-- <section id="projects" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">시공현황</h2>
+            <div id="grid-container" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+        </div>
+    </section> -->
+
+    <!-- 5. 오시는길 -->
+    <section id="place" class="py-16 bg-white">
+        <div class="container mx-auto px-6 text-center">
+            <h4 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8">오시는 길</h2>
+                <p class="text-gray-600 leading-relaxed mb-10 max-w-3xl mx-auto text-lg whitespace-pre-line">
+                    주소 : 부산 기장군 장안읍 장안산단3로 43 203호 <br>
+                    (부산은행, 부산경제진흥원 건물)
+                </p>
+                <div id="container" class="flex justify-center gap-6">
+                    <img id="place-img" src="img/place-img.png" alt="place-img">
+                </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="projectModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-80 backdrop-blur-sm" id="modalBackdrop"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <div
+                class="bg-white rounded-xl shadow-2xl w-full max-w-4xl overflow-hidden relative flex flex-col max-h-[90vh]">
+                <div class="p-4 border-b flex justify-between items-center bg-gray-50">
+                    <h3 id="modalTitle" class="text-xl font-bold text-gray-800 truncate pr-4"></h3>
+                    <button id="closeModal"><i class="fa-solid fa-times text-2xl"></i></button>
+                </div>
+                <div class="flex-1 overflow-y-auto bg-black relative">
+                    <div class="relative w-full h-64 md:h-96 flex items-center justify-center">
+                        <img id="modalImage" src="" class="max-w-full max-h-full object-contain">
+                        <button id="prevBtn"
+                            class="absolute left-4 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-80"><i
+                                class="fa-solid fa-chevron-left"></i></button>
+                        <button id="nextBtn"
+                            class="absolute right-4 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-80"><i
+                                class="fa-solid fa-chevron-right"></i></button>
+                        <div
+                            class="absolute bottom-4 right-4 bg-black bg-opacity-60 text-white px-3 py-1 rounded text-sm">
+                            <span id="currentCount"></span> / <span id="totalCount"></span></div>
+                    </div>
+                </div>
+                <div class="p-6 bg-white">
+                    <div class="text-sm text-gray-500 font-medium mb-4"><i class="fa-regular fa-calendar"></i> 시공일:
+                        <span id="modalDate"></span></div>
+                    <p id="modalContent" class="text-lg leading-relaxed text-gray-700"></p>
+                    <div class="mt-6 text-right"><button id="closeModalBtn"
+                            class="px-6 py-2 bg-gray-800 text-white rounded">닫기</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. 문의 하기 -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">문의하기</h2>
+
+            <div class="flex border-b border-gray-200 mb-8">
+                <button
+                    class="flex-1 py-3 text-center font-medium text-blue-600 border-b-2 border-blue-600 transition tab-btn"
+                    data-target="form-section">문의하기</button>
+                <button class="flex-1 py-3 text-center font-medium text-gray-500 hover:text-gray-700 transition tab-btn"
+                    data-target="my-inquiry">내문의 글</button>
+            </div>
+
+            <!-- Form -->
+            <div id="form-section" class="tab-content fade-in">
+                <form id="inquiryForm" class="space-y-6 bg-gray-50 p-8 rounded-lg shadow-sm border border-gray-100">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">제목</label>
+                        <input type="text" name="title" placeholder="문의 제목을 입력하세요"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+                            required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">구분</label>
+                        <select name="category"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+                            required>
+                            <option value="">선택해주세요</option>
+                            <option value="견적문의">견적문의</option>
+                            <option value="건설현장시공">건설현장시공</option>
+                            <option value="공장지붕시공">공장지붕시공</option>
+                            <option value="기타">기타</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">전화번호</label>
+                            <input type="tel" name="phone" placeholder="010-0000-0000 (숫자만 입력)"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+                                required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">임시 비밀번호</label>
+                            <input type="password" name="password" placeholder="비밀번호 4자리" maxlength="4"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+                                required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">내용</label>
+                        <textarea name="content" rows="5" placeholder="문의하실 내용을 자세히 적어주세요"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                            required></textarea>
+                    </div>
+
+                    <button type="submit" id="submitBtn"
+                        class="w-full bg-blue-600 text-white font-bold py-3 rounded-md hover:bg-blue-700 transition flex justify-center items-center gap-2">
+                        <span>제출하기</span>
+                        <div id="submitLoader" class="loader hidden w-5 h-5 border-2 border-white border-t-transparent">
+                        </div>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Check Inquiry -->
+            <div id="my-inquiry" class="tab-content hidden fade-in">
+                <!-- Login -->
+                <div id="inquiryLogin" class="bg-gray-50 p-8 rounded-lg border border-gray-100 max-w-md mx-auto">
+                    <div class="text-center mb-6">
+                        <div class="inline-block p-3 rounded-full bg-blue-50 text-blue-600 mb-2"><i
+                                class="fa-solid fa-lock text-xl"></i></div>
+                        <h3 class="text-lg font-bold text-gray-800">내 문의글 조회</h3>
+                        <p class="text-sm text-gray-500">Google Sheet에서 실시간으로 조회합니다.</p>
+                    </div>
+                    <form id="checkInquiryForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">전화번호</label>
+                            <input type="tel" id="checkPhone" placeholder="010-0000-0000"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+                                required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">임시 비밀번호</label>
+                            <input type="password" id="checkPw" placeholder="비밀번호 4자리" maxlength="4"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+                                required>
+                        </div>
+                        <button type="submit" id="checkBtn"
+                            class="w-full bg-gray-800 text-white font-bold py-3 rounded-md hover:bg-gray-900 transition flex justify-center items-center gap-2">
+                            <span>조회하기</span>
+                            <div id="checkLoader"
+                                class="loader hidden w-5 h-5 border-2 border-white border-t-transparent"></div>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Result -->
+                <div id="inquiryResult" class="hidden space-y-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold text-gray-800">조회 결과</h3>
+                        <button id="backToLogin" class="text-sm text-gray-500 hover:text-gray-800 underline">다시
+                            조회</button>
+                    </div>
+                    <div id="resultList" class="space-y-4"></div>
+                    <div id="noResult" class="hidden text-center py-8 text-gray-500 bg-gray-50 rounded-lg">문의 내역이 없습니다.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-12">
+        <div class="container mx-auto px-6 text-center space-y-2">
+            <div class="flex justify-center items-center gap-2 mb-4">
+                <img src="img/solar-icon.png" alt="company-icon" id="company_icon">
+                <span class="font-bold text-xl">(유)부울경태양광</span>
+            </div>
+            <p class="text-gray-400 text-sm">사업자명 : (유)부울경태양광</p>
+            <p class="text-gray-400 text-sm">주소 : 부산 기장군 장안읍 장안산단3로 43 203호 <br>
+                (부산은행, 부산경제진흥원 건물)
+            </p>
+            <a href="tel:01066754804" class="text-gray-400 text-sm">
+                <i class="fa-solid fa-phone"></i>&nbsp;문의전화 : 010-3675-4804
+            </a>
+            <p class="text-gray-400 text-sm"></p>
+            <!-- <p class="text-gray-400 text-sm">회사사이트 : company@company.com</p> -->
+            <div class="mt-8 border-t border-gray-800 pt-4">
+                <p class="text-xs text-gray-600">© 2025 (유)부울경태양광. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
     <!-- js -->
     <script src="script.js"></script>
-</head>
-<body>
-    
 </body>
+
 </html>
