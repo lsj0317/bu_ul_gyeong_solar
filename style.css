@@ -6,6 +6,24 @@ html {
     scroll-behavior: smooth;
 }
 
+/* border - 테두리 */
+.bor-1-d {
+    border: 1px solid #ddd;
+}
+
+/* w - 너비 */
+.w-60 {
+    width: 60%!important;
+}
+
+.w-80 {
+    width: 80%!important;
+}
+
+.w-100 {
+    width: 100%!important;
+}
+
 /* 부드러운 스크롤 */
 
 #company_icon {
