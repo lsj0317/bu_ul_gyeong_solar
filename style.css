@@ -21,6 +21,7 @@ html {
     width: 60% !important;
 }
 
+.chartDiv,
 #place-img {
     width: 40% !important;
 }
