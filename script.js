@@ -280,5 +280,10 @@ const barLayout = {
   yaxis: { title: "설치량" }
 };
 
+// config 객체에 responsive: true 설정
+const config = {
+    responsive: true
+};
+
 // 막대 그래프 생성
-Plotly.newPlot('myDiv', [{ x: xData, y: yData, type: 'bar' }], barLayout);
+Plotly.newPlot('myDiv', [{ x: xData, y: yData, type: 'bar' }], barLayout, config);
