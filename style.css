@@ -6,6 +6,11 @@ html {
     scroll-behavior: smooth;
 }
 
+/* text-color - 글자색상 */
+.text-yello {
+    color: yellow;
+}
+
 /* border - 테두리 */
 .bor-1-d {
     border: 1px solid #ddd;
