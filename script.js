@@ -11,19 +11,6 @@ function goToContact() {
   switchTab("form-section");
 }
 
-/** Data & Navigation Logic **/
-// const projectsData = [
-//     {title: "김제시 공단 태양광 시공", content: "김제시 농공단지 공장지붕에 태양광패널 100kw급 인프라 시공현장입니다.", day: "2024-10-09", src: "https://images.unsplash.com/photo-1508514177221-188b1cf2f26f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"},
-//     {title: "공주 주택가 단체문의 태양광 시공", content: "충남 공주 주택가 단지에 대규모 태양광패널 50kw급 인프라 시공현장입니다.", day: "2025-02-11", src: "https://images.unsplash.com/photo-1559302504-64aae6ca6b6f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"},
-//     {title: "부산 물류센터 지붕 시공", content: "부산항 인근 대형 물류센터 지붕 유휴부지 활용 태양광 발전소 구축.", day: "2024-11-20", src: "https://images.unsplash.com/photo-1611365892117-00ac5ef43c90?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"},
-//     {title: "강원도 산간지역 에코 빌리지", content: "친환경 에코 빌리지 단지 내 가정용 태양광 설비 일괄 시공.", day: "2024-09-15", src: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"},
-//     {title: "대전 연구단지 주차장 태양광", content: "연구단지 내 야외 주차장 차양막 겸용 태양광 패널 설치.", day: "2025-01-05", src: "https://images.unsplash.com/photo-1545208942-e1c4340e5503?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"},
-//     {title: "제주도 감귤농장 영농형 태양광", content: "농사와 발전사업을 병행하는 영농형 태양광 시스템 구축.", day: "2024-12-01", src: "https://images.unsplash.com/photo-1558449028-b53a39d100fc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"},
-//     {title: "인천 산업단지 옥상 유휴부지", content: "산업단지 내 다수 기업 옥상 임대형 태양광 발전소 시공.", day: "2025-03-10", src: "https://images.unsplash.com/photo-1624397640148-949b1732bb0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"},
-//     {title: "세종시 관공서 에너지 자립화", content: "공공기관 건물 에너지 자립률 제고를 위한 BIPV 시스템 도입.", day: "2024-08-22", src: "https://images.unsplash.com/photo-1592833159155-c62df1b65634?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"},
-//     {title: "경기도 전원주택 단지", content: "신규 조성되는 전원주택 단지 30세대 태양광 패널 보급 사업.", day: "2025-01-30", src: "https://images.unsplash.com/photo-1508514177221-188b1cf2f26f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"}
-// ];
-
 // Navbar & Mobile Menu Logic
 const nav = document.getElementById("navbar");
 const plusBtn = document.getElementById("plusBtn");
@@ -87,47 +74,17 @@ function toggleSidebar(show) {
   }
 }
 burgerBtn.addEventListener("click", () => toggleSidebar(true));
+
 document
   .getElementById("closeSidebar")
   .addEventListener("click", () => toggleSidebar(false));
 mobileOverlay.addEventListener("click", () => toggleSidebar(false));
+
 document
   .querySelectorAll(".mobile-link")
   .forEach((link) =>
     link.addEventListener("click", () => toggleSidebar(false))
   );
-
-// Grid & Modal Logic
-// const gridContainer = document.getElementById('grid-container');
-// projectsData.forEach((item, index) => {
-//     const card = document.createElement('div');
-//     card.className = "bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition cursor-pointer group border border-gray-100";
-//     card.onclick = () => openModal(index);
-//     card.innerHTML = `<div class="h-48 overflow-hidden"><img src="${item.src}" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500"></div><div class="p-5 flex flex-col justify-between h-32"><h3 class="font-bold text-lg text-gray-800 group-hover:text-blue-600 transition line-clamp-2">${item.title}</h3><div class="text-sm text-gray-500 mt-auto flex items-center gap-2"><i class="fa-regular fa-calendar"></i> ${item.day}</div></div>`;
-//     gridContainer.appendChild(card);
-// });
-
-// let currentModalIndex = 0;
-// const modal = document.getElementById('projectModal');
-// const modalImage = document.getElementById('modalImage');
-// const modalTitle = document.getElementById('modalTitle');
-// const modalDate = document.getElementById('modalDate');
-// const modalContent = document.getElementById('modalContent');
-// const currentCount = document.getElementById('currentCount');
-// const totalCount = document.getElementById('totalCount');
-// totalCount.textContent = projectsData.length;
-
-// function updateModal(index) {
-//     const data = projectsData[index];
-//     modalImage.src = data.src; modalTitle.textContent = data.title; modalDate.textContent = data.day; modalContent.textContent = data.content; currentCount.textContent = index + 1;
-// }
-// function openModal(index) { currentModalIndex = index; updateModal(index); modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
-// function closeModal() { modal.classList.add('hidden'); document.body.style.overflow = ''; }
-// document.getElementById('closeModal').addEventListener('click', closeModal);
-// document.getElementById('closeModalBtn').addEventListener('click', closeModal);
-// document.getElementById('modalBackdrop').addEventListener('click', closeModal);
-// document.getElementById('prevBtn').addEventListener('click', (e) => { e.stopPropagation(); currentModalIndex = (currentModalIndex - 1 + projectsData.length) % projectsData.length; updateModal(currentModalIndex); });
-// document.getElementById('nextBtn').addEventListener('click', (e) => { e.stopPropagation(); currentModalIndex = (currentModalIndex + 1) % projectsData.length; updateModal(currentModalIndex); });
 
 // Tab Logic
 const tabs = document.querySelectorAll(".tab-btn");
@@ -266,24 +223,131 @@ const data = [
   { category: "2027", value: 3100 },
   { category: "2028", value: 3300 },
   { category: "2029", value: 3700 },
-  { category: "2030", value: 4000 }
+  { category: "2030", value: 4000 },
 ];
 
 // 데이터를 x와 y 배열로 분리
-const xData = data.map(d => d.category);
-const yData = data.map(d => d.value);
+const xData = data.map((d) => d.category);
+const yData = data.map((d) => d.value);
 
 // 막대 그래프 레이아웃 정의
 const barLayout = {
   title: "국내 태양광 설치 현황",
   xaxis: { title: "기간" },
-  yaxis: { title: "설치량" }
+  yaxis: { title: "설치량" },
 };
 
 // config 객체에 responsive: true 설정
 const config = {
-    responsive: true
+  responsive: true,
 };
 
 // 막대 그래프 생성
-Plotly.newPlot('myDiv', [{ x: xData, y: yData, type: 'bar' }], barLayout, config);
+Plotly.newPlot(
+  "myDiv",
+  [{ x: xData, y: yData, type: "bar" }],
+  barLayout,
+  config
+);
+
+// 데이터 생성 로직 (100kW ~ 2000kW)
+// 이미지 로직 분석:
+// 100~900kW: 소유율 20%
+// 1000~2000kW: 소유율 25%
+// 임대수익(연): 임대kW * 30,000원
+// 소유자수익(연): 소유kW * 250,000원
+
+const data = [];
+for (let kw = 100; kw <= 2000; kw += 100) {
+  const area = kw * 2; // 평수는 kW * 2
+  let ratio = 0.2;
+  if (kw >= 1000) ratio = 0.25;
+
+  const ownerKw = kw * ratio;
+  const rentalKw = kw - ownerKw;
+
+  // 계산 (단위: 원)
+  const rentYear = rentalKw * 30000;
+  const ownYear = ownerKw * 250000;
+  const rent5 = rentYear * 5;
+  const own5 = ownYear * 5;
+  const total5 = rent5 + own5;
+
+  data.push({
+    kw: kw,
+    area: area,
+    label: `${kw}kW / ${area}평`,
+    ratioStr: `${ratio * 100}%`,
+    ownerKw: ownerKw,
+    rentalKw: rentalKw,
+    rentYear: rentYear,
+    rent5: rent5,
+    ownYear: ownYear,
+    own5: own5,
+    total5: total5,
+  });
+}
+
+// 요소 참조
+const select = document.getElementById("capacitySelect");
+const ratioDisplay = document.getElementById("ratioDisplay");
+const ownerKwDisplay = document.getElementById("ownerKwDisplay");
+const rentalKwDisplay = document.getElementById("rentalKwDisplay");
+const calcBtn = document.getElementById("calcBtn");
+const resultSection = document.getElementById("resultSection");
+
+// 결과창 요소 참조
+const resRentYear = document.getElementById("resRentYear");
+const resRent5 = document.getElementById("resRent5");
+const resOwnYear = document.getElementById("resOwnYear");
+const resOwn5 = document.getElementById("resOwn5");
+const resTotal = document.getElementById("resTotal");
+
+// Select Box 초기화
+data.forEach((item, index) => {
+  const option = document.createElement("option");
+  option.value = index; // data 배열의 인덱스를 value로 사용
+  option.text = item.label;
+  select.appendChild(option);
+});
+
+// 숫자 포맷 함수 (콤마 추가)
+function formatMoney(num) {
+  return num.toLocaleString("ko-KR");
+}
+
+// 상단 정보 업데이트 함수
+function updateInfo() {
+  const idx = select.value;
+  const item = data[idx];
+
+  ratioDisplay.value = item.ratioStr;
+  ownerKwDisplay.value = item.ownerKw + " kW";
+  rentalKwDisplay.value = item.rentalKw + " kW";
+
+  // 옵션 변경 시 결과창을 숨길지, 유지할지 결정 (여기선 숨김으로 처리하여 다시 계산 유도)
+  resultSection.classList.add("hidden");
+}
+
+// 초기 실행
+updateInfo();
+
+// 이벤트 리스너
+select.addEventListener("change", updateInfo);
+
+calcBtn.addEventListener("click", () => {
+  const idx = select.value;
+  const item = data[idx];
+
+  // 결과 데이터 주입
+  resRentYear.innerText = formatMoney(item.rentYear) + " 원";
+  resRent5.innerText = formatMoney(item.rent5) + " 원";
+
+  resOwnYear.innerText = formatMoney(item.ownYear) + " 원";
+  resOwn5.innerText = formatMoney(item.own5) + " 원";
+
+  resTotal.innerText = formatMoney(item.total5);
+
+  // 결과창 표시
+  resultSection.classList.remove("hidden");
+});

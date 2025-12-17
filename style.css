@@ -77,6 +77,10 @@ html {
     animation: fadeIn 0.5s ease-in-out;
 }
 
+.arrow-shape {
+    clip-path: polygon(0% 0%, 92% 0%, 100% 50%, 92% 100%, 0% 100%);
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
