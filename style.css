@@ -21,7 +21,10 @@ html {
     width: 60% !important;
 }
 
-.chartDiv,
+.chartDiv {
+    width: 100% !important;
+}
+
 #place-img {
     width: 40% !important;
 }
