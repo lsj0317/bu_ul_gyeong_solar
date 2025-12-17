@@ -252,9 +252,23 @@ document.getElementById("backToLogin").addEventListener("click", () => {
   checkInquiryForm.reset();
 });
 
-// 그래프
-Plotly.newPlot('myDiv', [{
-    x: [1, 2, 3, 4],
-    y: [10, 15, 13, 17],
-    type: 'scatter'
-}]);
+// 그래프 데이터 정의
+var data = [{
+    x: ["2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"],
+    y: [0, 1000, 2000, 3000, 4000, 5000, 6000],
+    type: "bar"
+}];
+
+// 그래프 레이아웃 정의 및 y축 설정
+var layout = {
+    title: "국내 태양광 설치 현황 및 전망 (Y축: 0-6000, 1000 단위)",
+    yaxis: {
+        title: "설치현황",
+        range: [0, 6000], // y축 범위: 0에서 6000까지
+        tick0: 0,          // 첫 번째 눈금 위치: 0
+        dtick: 1000        // 눈금 간격: 1000 단위
+    }
+};
+
+// Plotly.newPlot 함수를 사용하여 div에 그래프 생성
+Plotly.newPlot('myDiv', data, layout);
