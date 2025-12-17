@@ -251,3 +251,39 @@ document.getElementById("backToLogin").addEventListener("click", () => {
   inquiryLogin.classList.remove("hidden");
   checkInquiryForm.reset();
 });
+
+// 데이터 배열 정의 (카테고리와 값)
+const data = [
+  { category: "2018", value: 2300 },
+  { category: "2019", value: 3800 },
+  { category: "2020", value: 4900 },
+  { category: "2021", value: 3900 },
+  { category: "2022", value: 3100 },
+  { category: "2023", value: 2900 },
+  { category: "2024", value: 3100 },
+  { category: "2025", value: 3000 },
+  { category: "2026", value: 3000 },
+  { category: "2027", value: 3100 },
+  { category: "2028", value: 3300 },
+  { category: "2029", value: 3700 },
+  { category: "2030", value: 4000 }
+];
+
+// 데이터를 x와 y 배열로 분리
+const xData = data.map(d => d.category);
+const yData = data.map(d => d.value);
+
+// 막대 그래프 레이아웃 정의
+const barLayout = {
+  title: "국내 태양광 설치 현황",
+  xaxis: { title: "기간" },
+  yaxis: { title: "설치량" }
+};
+
+// config 객체에 responsive: true 설정
+const config = {
+    responsive: true
+};
+
+// 막대 그래프 생성
+Plotly.newPlot('myDiv', [{ x: xData, y: yData, type: 'bar' }], barLayout, config);
