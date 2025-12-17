@@ -252,23 +252,33 @@ document.getElementById("backToLogin").addEventListener("click", () => {
   checkInquiryForm.reset();
 });
 
-// 그래프 데이터 정의
-var data = [{
-    x: ["2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"],
-    y: [0, 1000, 2000, 3000, 4000, 5000, 6000],
-    type: "bar"
-}];
+// 데이터 배열 정의 (카테고리와 값)
+const data = [
+  { category: "2018", value: 2300 },
+  { category: "2019", value: 3800 },
+  { category: "2020", value: 4900 },
+  { category: "2021", value: 3900 },
+  { category: "2022", value: 3100 },
+  { category: "2023", value: 2900 },
+  { category: "2024", value: 3100 },
+  { category: "2025", value: 3000 },
+  { category: "2026", value: 3000 },
+  { category: "2027", value: 3100 },
+  { category: "2028", value: 3300 },
+  { category: "2029", value: 3700 },
+  { category: "2030", value: 4000 }
+];
 
-// 그래프 레이아웃 정의 및 y축 설정
-var layout = {
-    title: "국내 태양광 설치 현황 및 전망 (Y축: 0-6000, 1000 단위)",
-    yaxis: {
-        title: "설치현황",
-        range: [0, 6000], // y축 범위: 0에서 6000까지
-        tick0: 0,          // 첫 번째 눈금 위치: 0
-        dtick: 1000        // 눈금 간격: 1000 단위
-    }
+// 데이터를 x와 y 배열로 분리
+const xData = data.map(d => d.category);
+const yData = data.map(d => d.value);
+
+// 막대 그래프 레이아웃 정의
+const barLayout = {
+  title: "국내 태양광 설치 현황",
+  xaxis: { title: "기간" },
+  yaxis: { title: "설치량" }
 };
 
-// Plotly.newPlot 함수를 사용하여 div에 그래프 생성
-Plotly.newPlot('myDiv', data, layout);
+// 막대 그래프 생성
+Plotly.newPlot('myDiv', [{ x: xData, y: yData, type: 'bar' }], barLayout);
