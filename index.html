@@ -18,6 +18,9 @@
 
     <!-- css -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 
 <body class="bg-gray-50 relative">
@@ -162,6 +165,13 @@
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">사업소개</h2>
             <div id="container" class="flex justify-center gap-6">
                 <img id="about_img1" src="img/about-img1.png" alt="about1">
+            </div>
+            <!-- 태양광 설치 현황 그래프(plotly) -->
+            <h5 class="font-bold text-center mb-5 mt-5">
+                국내 태양광 설치 현황 및 전망 (단위 : MW)
+            </h5>
+            <div id="container" class="flex justify-center gap-6">
+                <div id="myDiv"></div>
             </div>
         </div>
         <div class="container mx-auto px-6">

@@ -251,3 +251,10 @@ document.getElementById("backToLogin").addEventListener("click", () => {
   inquiryLogin.classList.remove("hidden");
   checkInquiryForm.reset();
 });
+
+// 그래프
+Plotly.newPlot('myDiv', [{
+    x: [1, 2, 3, 4],
+    y: [10, 15, 13, 17],
+    type: 'scatter'
+}]);
