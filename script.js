@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   /*******************************************************
    * [중요] Google Apps Script 웹 앱 URL을 아래에 입력하세요.
    *******************************************************/
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwY-ntBXUcqQ58XWsKfzqJ1S6-MvcR00kQhh9Lc6RgnDF786jlqubMYRJ_1dsdMTIGv/exec";
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzrORusl7ABGVO7-aDtta7KUHSk2A9TEIzJY9qNB7MovhnTsCmlPGbZ8Y2B1XzVixmMjw/exec";
 
   /** Aside Contact Button Logic **/
   function goToContact() {
@@ -105,23 +105,23 @@ document.addEventListener("DOMContentLoaded", function () {
   window.switchTab = (targetId) =>
     document.querySelector(`.tab-btn[data-target="${targetId}"]`)?.click();
 
-  /** Google Sheets Logic **/
+/** Google Sheets Logic **/
   const inquiryForm = document.getElementById("inquiryForm");
   const submitBtn = document.getElementById("submitBtn");
   const submitLoader = document.getElementById("submitLoader");
 
-  // [수정 1] POST 요청 (글쓰기)
+  // 1. 글쓰기 (POST 요청)
   inquiryForm.addEventListener("submit", (e) => {
     e.preventDefault();
     if (GOOGLE_SCRIPT_URL.includes("YOUR_")) {
-      alert("스크립트 코드를 구글 앱스 스크립트에 배포하고 URL을 입력해주세요.");
+      alert("스크립트 URL을 확인해주세요.");
       return;
     }
+
     submitBtn.disabled = true;
     submitLoader.classList.remove("hidden");
 
     const formData = new FormData(inquiryForm);
-    // 데이터를 객체로 만듭니다.
     const data = {
       title: formData.get("title"),
       category: formData.get("category"),
@@ -132,23 +132,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
     fetch(GOOGLE_SCRIPT_URL, {
       method: "POST",
-      // [중요] mode: 'no-cors' 삭제! (응답을 받기 위해)
-      // [중요] Content-Type을 text/plain으로 설정하여 Preflight 요청 방지
-      headers: { "Content-Type": "text/plain;charset=utf-8" }, 
+      redirect: "follow", // 리다이렉트 자동 처리
+      mode: "CORS",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8", // CORS 방지용 헤더
+      },
       body: JSON.stringify(data),
     })
-      .then((response) => response.json()) // 이제 JSON 응답을 읽을 수 있습니다.
+      .then((response) => response.json())
       .then((data) => {
         if (data.result === "success") {
-            alert("문의가 성공적으로 접수되었습니다.\n'내 문의글' 탭에서 확인하실 수 있습니다.");
-            inquiryForm.reset();
+          alert("문의가 성공적으로 접수되었습니다.\n'내 문의글' 탭에서 확인하실 수 있습니다.");
+          inquiryForm.reset();
         } else {
-            alert("서버 오류: " + JSON.stringify(data));
+          alert("오류가 발생했습니다: " + JSON.stringify(data));
         }
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("전송 중 오류가 발생했습니다.");
+        alert("서버 통신 중 오류가 발생했습니다.");
       })
       .finally(() => {
         submitBtn.disabled = false;
@@ -156,7 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   });
 
-  // [수정 2] GET 요청 (조회) - 코드는 맞으나 배포 권한이 'Anyone'이어야 작동함
+  // 2. 조회하기 (GET 요청)
   const checkInquiryForm = document.getElementById("checkInquiryForm");
   const checkBtn = document.getElementById("checkBtn");
   const checkLoader = document.getElementById("checkLoader");
@@ -167,36 +169,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
   checkInquiryForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    if (GOOGLE_SCRIPT_URL.includes("YOUR_")) {
-       alert("URL을 확인해주세요.");
-       return;
-    }
-
     const phone = document.getElementById("checkPhone").value;
     const pw = document.getElementById("checkPw").value;
 
     checkBtn.disabled = true;
     checkLoader.classList.remove("hidden");
 
+    // 파라미터 인코딩 처리
     const queryUrl = `${GOOGLE_SCRIPT_URL}?phone=${encodeURIComponent(phone)}&password=${encodeURIComponent(pw)}`;
 
     fetch(queryUrl)
       .then((response) => {
-        // 여기서 401 에러가 나면 권한 설정 문제입니다.
+        // 401 에러 등 체크
         if (!response.ok) {
-            throw new Error("Network response was not ok " + response.status);
+           throw new Error("서버 응답 오류: " + response.status);
         }
         return response.json();
       })
       .then((data) => {
-        // renderResults 함수가 정의되어 있다고 가정합니다.
-        renderResults(data); 
+        renderResults(data);
         inquiryLogin.classList.add("hidden");
         inquiryResult.classList.remove("hidden");
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("조회 중 오류가 발생했습니다. (권한 설정을 확인하세요)");
+        alert("조회에 실패했습니다.\n관리자에게 문의하거나 잠시 후 다시 시도해주세요.");
       })
       .finally(() => {
         checkBtn.disabled = false;
