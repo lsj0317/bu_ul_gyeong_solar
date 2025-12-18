@@ -133,7 +133,6 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch(GOOGLE_SCRIPT_URL, {
       method: "POST",
       redirect: "follow", // 리다이렉트 자동 처리
-      mode: "CORS",
       headers: {
         "Content-Type": "text/plain;charset=utf-8", // CORS 방지용 헤더
       },
