@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
   window.switchTab = (targetId) =>
     document.querySelector(`.tab-btn[data-target="${targetId}"]`)?.click();
 
-  코드와 에러 로그(401 Unauthorized)를 종합해 볼 때, 문제는 두 가지가 섞여 있습니다.GET 요청 (조회): 401 Unauthorized 에러 $\rightarrow$ 구글 앱스 스크립트 배포 권한 설정 문제POST 요청 (작성): mode: 'no-cors' 사용 중 $\rightarrow$ 성공 여부를 알 수 없는 불안정한 방식아래 순서대로 해결하시면 됩니다.1단계: 구글 앱스 스크립트(GAS) 배포 권한 수정 (필수)가장 결정적인 원인은 **"권한 없음(401)"**입니다. 조회 기능(fetch(queryUrl))은 no-cors를 쓸 수 없으므로(응답을 읽어야 하니까), 반드시 권한이 공개되어 있어야 합니다.구글 앱스 스크립트 편집기로 돌아갑니다.우측 상단 [배포] $\rightarrow$ [새 배포 관리] (또는 새 배포)를 누릅니다.설정(톱니바퀴) $\rightarrow$ 웹 앱 설정이 아래와 같은지 확인하세요.다음 사용자 권한으로 실행: 나 (Me)액세스 권한이 있는 사용자: 모든 사용자 (Anyone) $\leftarrow$ 이게 핵심입니다!(주의: "Google 계정이 있는 모든 사용자"로 설정하면 로그인 안 된 방문자는 에러가 납니다.)[배포] 버튼을 눌러 새 URL을 받으세요. (기존 URL과 달라질 수 있으니 꼭 확인하여 코드에 반영하세요).2단계: 자바스크립트 코드 수정 (fetch 옵션 변경)작성해주신 코드를 수정해 드립니다.구글 앱스 스크립트는 application/json 헤더를 받으면 브라우저가 보안 검사(OPTIONS 요청)를 먼저 보내는데, 여기서 에러가 잘 납니다.따라서, 헤더를 text/plain으로 속여서 보내는 방법이 표준적인 해결책입니다.아래 코드로 script.js를 교체하세요.JavaScript  /** Google Sheets Logic **/
+  /** Google Sheets Logic **/
   const inquiryForm = document.getElementById("inquiryForm");
   const submitBtn = document.getElementById("submitBtn");
   const submitLoader = document.getElementById("submitLoader");
@@ -162,8 +162,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const checkLoader = document.getElementById("checkLoader");
   const inquiryLogin = document.getElementById("inquiryLogin");
   const inquiryResult = document.getElementById("inquiryResult");
-  // const resultList = document.getElementById("resultList"); // (사용하지 않는다면 주석)
-  // const noResult = document.getElementById("noResult"); // (사용하지 않는다면 주석)
+  const resultList = document.getElementById("resultList");
+  const noResult = document.getElementById("noResult");
 
   checkInquiryForm.addEventListener("submit", (e) => {
     e.preventDefault();
