@@ -105,22 +105,23 @@ document.addEventListener("DOMContentLoaded", function () {
   window.switchTab = (targetId) =>
     document.querySelector(`.tab-btn[data-target="${targetId}"]`)?.click();
 
-  /** Google Sheets Logic (Same as before) **/
+  코드와 에러 로그(401 Unauthorized)를 종합해 볼 때, 문제는 두 가지가 섞여 있습니다.GET 요청 (조회): 401 Unauthorized 에러 $\rightarrow$ 구글 앱스 스크립트 배포 권한 설정 문제POST 요청 (작성): mode: 'no-cors' 사용 중 $\rightarrow$ 성공 여부를 알 수 없는 불안정한 방식아래 순서대로 해결하시면 됩니다.1단계: 구글 앱스 스크립트(GAS) 배포 권한 수정 (필수)가장 결정적인 원인은 **"권한 없음(401)"**입니다. 조회 기능(fetch(queryUrl))은 no-cors를 쓸 수 없으므로(응답을 읽어야 하니까), 반드시 권한이 공개되어 있어야 합니다.구글 앱스 스크립트 편집기로 돌아갑니다.우측 상단 [배포] $\rightarrow$ [새 배포 관리] (또는 새 배포)를 누릅니다.설정(톱니바퀴) $\rightarrow$ 웹 앱 설정이 아래와 같은지 확인하세요.다음 사용자 권한으로 실행: 나 (Me)액세스 권한이 있는 사용자: 모든 사용자 (Anyone) $\leftarrow$ 이게 핵심입니다!(주의: "Google 계정이 있는 모든 사용자"로 설정하면 로그인 안 된 방문자는 에러가 납니다.)[배포] 버튼을 눌러 새 URL을 받으세요. (기존 URL과 달라질 수 있으니 꼭 확인하여 코드에 반영하세요).2단계: 자바스크립트 코드 수정 (fetch 옵션 변경)작성해주신 코드를 수정해 드립니다.구글 앱스 스크립트는 application/json 헤더를 받으면 브라우저가 보안 검사(OPTIONS 요청)를 먼저 보내는데, 여기서 에러가 잘 납니다.따라서, 헤더를 text/plain으로 속여서 보내는 방법이 표준적인 해결책입니다.아래 코드로 script.js를 교체하세요.JavaScript  /** Google Sheets Logic **/
   const inquiryForm = document.getElementById("inquiryForm");
   const submitBtn = document.getElementById("submitBtn");
   const submitLoader = document.getElementById("submitLoader");
 
+  // [수정 1] POST 요청 (글쓰기)
   inquiryForm.addEventListener("submit", (e) => {
     e.preventDefault();
     if (GOOGLE_SCRIPT_URL.includes("YOUR_")) {
-      alert(
-        "스크립트 코드를 구글 앱스 스크립트에 배포하고 URL을 코드 상단에 입력해주세요."
-      );
+      alert("스크립트 코드를 구글 앱스 스크립트에 배포하고 URL을 입력해주세요.");
       return;
     }
     submitBtn.disabled = true;
     submitLoader.classList.remove("hidden");
+
     const formData = new FormData(inquiryForm);
+    // 데이터를 객체로 만듭니다.
     const data = {
       title: formData.get("title"),
       category: formData.get("category"),
@@ -128,17 +129,22 @@ document.addEventListener("DOMContentLoaded", function () {
       password: formData.get("password"),
       content: formData.get("content"),
     };
+
     fetch(GOOGLE_SCRIPT_URL, {
       method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
+      // [중요] mode: 'no-cors' 삭제! (응답을 받기 위해)
+      // [중요] Content-Type을 text/plain으로 설정하여 Preflight 요청 방지
+      headers: { "Content-Type": "text/plain;charset=utf-8" }, 
       body: JSON.stringify(data),
     })
-      .then(() => {
-        alert(
-          "문의가 성공적으로 접수되었습니다.\n'내 문의글' 탭에서 확인하실 수 있습니다."
-        );
-        inquiryForm.reset();
+      .then((response) => response.json()) // 이제 JSON 응답을 읽을 수 있습니다.
+      .then((data) => {
+        if (data.result === "success") {
+            alert("문의가 성공적으로 접수되었습니다.\n'내 문의글' 탭에서 확인하실 수 있습니다.");
+            inquiryForm.reset();
+        } else {
+            alert("서버 오류: " + JSON.stringify(data));
+        }
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -150,39 +156,47 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   });
 
+  // [수정 2] GET 요청 (조회) - 코드는 맞으나 배포 권한이 'Anyone'이어야 작동함
   const checkInquiryForm = document.getElementById("checkInquiryForm");
   const checkBtn = document.getElementById("checkBtn");
   const checkLoader = document.getElementById("checkLoader");
   const inquiryLogin = document.getElementById("inquiryLogin");
   const inquiryResult = document.getElementById("inquiryResult");
-  const resultList = document.getElementById("resultList");
-  const noResult = document.getElementById("noResult");
+  // const resultList = document.getElementById("resultList"); // (사용하지 않는다면 주석)
+  // const noResult = document.getElementById("noResult"); // (사용하지 않는다면 주석)
 
   checkInquiryForm.addEventListener("submit", (e) => {
     e.preventDefault();
     if (GOOGLE_SCRIPT_URL.includes("YOUR_")) {
-      alert(
-        "스크립트 코드를 구글 앱스 스크립트에 배포하고 URL을 코드 상단에 입력해주세요."
-      );
-      return;
+       alert("URL을 확인해주세요.");
+       return;
     }
+
     const phone = document.getElementById("checkPhone").value;
     const pw = document.getElementById("checkPw").value;
+
     checkBtn.disabled = true;
     checkLoader.classList.remove("hidden");
-    const queryUrl = `${GOOGLE_SCRIPT_URL}?phone=${encodeURIComponent(
-      phone
-    )}&password=${encodeURIComponent(pw)}`;
+
+    const queryUrl = `${GOOGLE_SCRIPT_URL}?phone=${encodeURIComponent(phone)}&password=${encodeURIComponent(pw)}`;
+
     fetch(queryUrl)
-      .then((response) => response.json())
+      .then((response) => {
+        // 여기서 401 에러가 나면 권한 설정 문제입니다.
+        if (!response.ok) {
+            throw new Error("Network response was not ok " + response.status);
+        }
+        return response.json();
+      })
       .then((data) => {
-        renderResults(data);
+        // renderResults 함수가 정의되어 있다고 가정합니다.
+        renderResults(data); 
         inquiryLogin.classList.add("hidden");
         inquiryResult.classList.remove("hidden");
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("조회 중 오류가 발생했습니다.");
+        alert("조회 중 오류가 발생했습니다. (권한 설정을 확인하세요)");
       })
       .finally(() => {
         checkBtn.disabled = false;
