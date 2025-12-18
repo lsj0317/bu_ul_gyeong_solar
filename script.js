@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   /*******************************************************
    * [중요] Google Apps Script 웹 앱 URL을 아래에 입력하세요.
    *******************************************************/
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/library/d/1Kn58yvXwEaL6I-xifU_c1jHpZtS59OH2UUS05t4S-OQqmpuZa0TodMy2/1";
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwY-ntBXUcqQ58XWsKfzqJ1S6-MvcR00kQhh9Lc6RgnDF786jlqubMYRJ_1dsdMTIGv/exec";
 
   /** Aside Contact Button Logic **/
   function goToContact() {
@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   inquiryForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    if (GOOGLE_SCRIPT_URL.includes("YOUR_")) {
+    if (GOOGLE_SCRIPT_URL.includes("AKfycbwY-ntBXUcqQ58XWsKfzqJ1S6-MvcR00kQhh9Lc6RgnDF786jlqubMYRJ_1dsdMTIGv")) {
       alert(
         "스크립트 코드를 구글 앱스 스크립트에 배포하고 URL을 코드 상단에 입력해주세요."
       );
