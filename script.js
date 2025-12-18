@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   inquiryForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    if (GOOGLE_SCRIPT_URL.includes("AKfycbwY-ntBXUcqQ58XWsKfzqJ1S6-MvcR00kQhh9Lc6RgnDF786jlqubMYRJ_1dsdMTIGv")) {
+    if (GOOGLE_SCRIPT_URL.includes("YOUR_")) {
       alert(
         "스크립트 코드를 구글 앱스 스크립트에 배포하고 URL을 코드 상단에 입력해주세요."
       );
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   checkInquiryForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    if (GOOGLE_SCRIPT_URL.includes("AKfycbwY-ntBXUcqQ58XWsKfzqJ1S6-MvcR00kQhh9Lc6RgnDF786jlqubMYRJ_1dsdMTIGv")) {
+    if (GOOGLE_SCRIPT_URL.includes("YOUR_")) {
       alert(
         "스크립트 코드를 구글 앱스 스크립트에 배포하고 URL을 코드 상단에 입력해주세요."
       );
