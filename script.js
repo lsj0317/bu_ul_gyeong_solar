@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   /*******************************************************
    * [중요] Google Apps Script 웹 앱 URL을 아래에 입력하세요.
    *******************************************************/
-  const GOOGLE_SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/library/d/1Kn58yvXwEaL6I-xifU_c1jHpZtS59OH2UUS05t4S-OQqmpuZa0TodMy2/1";
 
   /** Aside Contact Button Logic **/
   function goToContact() {
