@@ -430,4 +430,41 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById('prevBtn').addEventListener('click', (e) => { e.stopPropagation(); currentModalIndex = (currentModalIndex - 1 + projectsData.length) % projectsData.length; updateModal(currentModalIndex); });
   document.getElementById('nextBtn').addEventListener('click', (e) => { e.stopPropagation(); currentModalIndex = (currentModalIndex + 1) % projectsData.length; updateModal(currentModalIndex); });
 
+
+  // 모달, 모달오픈 버튼, 모달클로즈 버튼, 확인및종료 버튼
+  const modals = document.getElementById('privacyModal');
+  const openBtn = document.getElementById('modalButton');
+  const closeBtn = document.getElementById('closeBtn');
+  const agreeAndCloseBtn = document.getElementById('agreeAndCloseBtn');
+  // 개인정보 동의 내역 확인버튼 누를 시 모달 출력
+  openBtn.addEventListener('click', () => {
+      openModals();
+  });
+  // 닫기버튼 누를 시 모달 닫기
+  closeBtn.addEventListener('click', () => {
+      closeModals();
+  })
+  //
+  agreeAndCloseBtn.addEventListener('click', () => {
+      agreeAndCloseModals();
+  })
+  // 모달 출력 함수
+  function openModals() {
+      modals.classList.remove('hidden');
+      // 스크롤 방지 (선택 사항)
+      document.body.style.overflow = 'hidden';
+  }
+  // 모달 숨김 함수
+  function closeModals() {
+      modals.classList.add('hidden');
+      // 스크롤 복원
+      document.body.style.overflow = 'auto';
+  }
+  // 확인 및 닫기 함수
+  function agreeAndCloseModals() {
+      modals.classList.add('hidden');
+      // 스크롤 복원
+      document.body.style.overflow = 'auto';
+  }
+
 });
