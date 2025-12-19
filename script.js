@@ -106,8 +106,17 @@ document.addEventListener("DOMContentLoaded", function () {
   
   // 특정 ID를 가진 input 요소를 가져옵니다.
   const phoneNumberInput = document.getElementById('phoneNumberInput');
+  const phoneNumberInput2 = document.getElementById('phoneNumberInput2');
+  let inputTarget;
+
+  if(phoneNumberInput.id.includes("phoneNumber")) {
+    inputTarget = phoneNumberInput;
+  } else if(phoneNumberInput2.id.includes("phoneNumber")) {
+    inputTarget = phoneNumberInput2;
+  }
+
   // 전화번호 입력 시 하이픈 자동 추가
-  phoneNumberInput.addEventListener('input', function(event) {
+  inputTarget.addEventListener('input', function(event) {
     let value = event.target.value;
 
     // 숫자 이외의 문자(하이픈 포함)를 모두 제거합니다.
