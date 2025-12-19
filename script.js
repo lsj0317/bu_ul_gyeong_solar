@@ -102,14 +102,13 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById(tab.dataset.target).classList.remove("hidden");
     });
   });
-  window.switchTab = (targetId) =>
-    document.querySelector(`.tab-btn[data-target="${targetId}"]`)?.click();
+  window.switchTab = (targetId) => document.querySelector(`.tab-btn[data-target="${targetId}"]`)?.click();
 
-  // 전화번호 입력시 하이픈 - 추가
-  const autoHyphen = (target) => {
-  target.value = target.value
-    .replace(/[^0-9]/g, '')
-    .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+  // 전화번호 입력 시 하이픈 자동 추가
+  function autoHypen(target) {
+      target.value = target.value
+      .replace(/[^0-9]/g, '') // 숫자만 남기기
+      .replace(/(\d{3})(\d{3,4})(\d{4})/, '$1-$2-$3'); // 3-4-4 형식으로 변환
   }
 
   /** Google Sheets Logic **/
