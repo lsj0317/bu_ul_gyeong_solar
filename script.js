@@ -103,13 +103,30 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
   window.switchTab = (targetId) => document.querySelector(`.tab-btn[data-target="${targetId}"]`)?.click();
-
+  
+  // 특정 ID를 가진 input 요소를 가져옵니다.
+  const phoneNumberInput = document.getElementById('phoneNumberInput');
   // 전화번호 입력 시 하이픈 자동 추가
-  function autoHypen(target) {
-      target.value = target.value
-      .replace(/[^0-9]/g, '') // 숫자만 남기기
-      .replace(/(\d{3})(\d{3,4})(\d{4})/, '$1-$2-$3'); // 3-4-4 형식으로 변환
-  }
+  phoneNumberInput.addEventListener('input', function(event) {
+    let value = event.target.value;
+
+    // 숫자 이외의 문자(하이픈 포함)를 모두 제거합니다.
+    value = value.replace(/[^0-9]/g, '');
+
+    // 전화번호 형식에 맞게 하이픈을 추가합니다.
+    if (value.length < 4) {
+        // 3자리 이하일 경우 하이픈 없음
+    } else if (value.length < 8) {
+        // 4~7자리: "010-1234" 또는 "02-1234" 등
+        value = value.replace(/(\d{3})(\d{1,4})/, '$1-$2');
+    } else {
+        // 8자리 이상 (일반적인 휴대폰 번호 11자리 기준): "010-1234-5678"
+        value = value.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+    }
+    // 정규식에 따라 하이픈이 들어간 최종 값을 input에 설정합니다.
+    event.target.value = value;
+  });
+
 
   /** Google Sheets Logic **/
   const inquiryForm = document.getElementById("inquiryForm");
