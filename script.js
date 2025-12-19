@@ -105,7 +105,14 @@ document.addEventListener("DOMContentLoaded", function () {
   window.switchTab = (targetId) =>
     document.querySelector(`.tab-btn[data-target="${targetId}"]`)?.click();
 
-/** Google Sheets Logic **/
+  // 전화번호 입력시 하이픈 - 추가
+  const autoHyphen = (target) => {
+  target.value = target.value
+    .replace(/[^0-9]/g, '')
+    .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+  }
+
+  /** Google Sheets Logic **/
   const inquiryForm = document.getElementById("inquiryForm");
   const submitBtn = document.getElementById("submitBtn");
   const submitLoader = document.getElementById("submitLoader");
@@ -360,7 +367,6 @@ document.addEventListener("DOMContentLoaded", function () {
       resultSection.classList.remove("hidden");
     }
   });
-
 
   const projectsData = [
       {title: "부울경 산업단지 태양광 보급", content: "부산, 울산, 경남지역의 공장 및 물류센터 지붕 유휴부지 활용 태양광 발전소 구축.", day: "2025-11-20", src: "https://images.unsplash.com/photo-1611365892117-00ac5ef43c90?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"},

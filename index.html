@@ -165,7 +165,8 @@
     <!-- 3. 사업소개 -->
     <section id="info" class="py-10 bg-gray-50">
         <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">사업소개 - 태양광을 시작해야 하는 이유</h2>
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">사업소개</h2>
+            <p class="text-center text-gray-600">태양광설치를 시작해야 하는 이유</p>
             <div id="container" class="flex justify-center gap-6">
                 <img id="about_img1" src="img/about-img1.png" alt="about1">
             </div>
@@ -175,9 +176,8 @@
                 <div class="flex items-center justify-center">
 
                 </div>
-                <h4
-                    class="text-black-800 font-bold leading-relaxed max-w-6xl mx-auto text-lg text-center whitespace-pre-line">
-                    1. 태양광설치는 꾸준히 늘어나고 있습니다!
+                <h4 class="text-black-800 font-bold leading-relaxed max-w-6xl mx-auto text-lg text-center whitespace-pre-line">
+                    첫 번째. 태양광 설치는 꾸준히 늘어나고 있습니다!
                 </h4>
                 <!-- 태양광 설치 현황 그래프(plotly) -->
                 <h5 class="text-gray-600 text-center mb-5 mt-5">
@@ -193,9 +193,8 @@
                     <div id="myDiv" class="chartDiv"></div>
                 </div>
                 <!--  -->
-                <h4
-                    class="text-black-800 font-bold leading-relaxed max-w-6xl mx-auto text-lg py-5 text-center whitespace-pre-line">
-                    2. 다양한 경험을 바탕으로 최고의 대안을 찾아드립니다!
+                <h4 class="text-black-800 font-bold leading-relaxed max-w-6xl mx-auto text-lg py-5 text-center whitespace-pre-line">
+                    두 번째. (유) 부울경태양광의 축적된 기술과 경험이 있습니다!
                 </h4>
                 <div class="container mx-auto px-6">
                     <!-- <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">시공현황</h2> -->
@@ -204,7 +203,7 @@
                 <!--  -->
                 <h4
                     class="text-black-800 font-bold leading-relaxed max-w-6xl mx-auto text-lg py-5 text-center whitespace-pre-line">
-                    3. 믿음직한 파트너가 있습니다!
+                    세 번째. 업계 최고의 회사들이 파트너로 함께합니다!
                 </h4>
                 <div class="container flex justify-center mx-auto px-6">
                     <div class="max-w-5xl w-full bg-white rounded-xl shadow-xl overflow-hidden">
@@ -880,7 +879,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">전화번호</label>
-                            <input type="tel" name="phone" placeholder="010-0000-0000 (숫자만 입력)"
+                            <input type="text" oninput="autoHyphen(this)" maxlength="13" placeholder="전화번호를 입력하세요" 
                                 class="w-full px-4 py-2 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
                                 required>
                         </div>
@@ -920,7 +919,7 @@
                     <form id="checkInquiryForm" class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">전화번호</label>
-                            <input type="tel" id="checkPhone" placeholder="010-0000-0000"
+                            <input type="text" oninput="autoHyphen(this)" maxlength="13" placeholder="전화번호를 입력하세요"
                                 class="w-full px-4 py-2 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
                                 required>
                         </div>
