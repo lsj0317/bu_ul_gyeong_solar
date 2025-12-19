@@ -838,7 +838,6 @@
                 <h4 class="font-bold text-gray-800 mb-2">▶ 개인정보를 제공받는 자</h4>
                 <p>- 유한회사 부울경태양광, 부울경태양광 유한회사의 정보 제공을 받는 계약 상담사</p>
             </section>
-
             <section>
                 <h4 class="font-bold text-gray-800 mb-2">▶ 개인정보의 수집 및 이용목적</h4>
                 <ul class="list-disc ml-5 space-y-1">
@@ -849,37 +848,30 @@
                     <li>기타 원활한 양질의 서비스 제공 등</li>
                 </ul>
             </section>
-
             <section>
                 <h4 class="font-bold text-gray-800 mb-2">▶ 개인정보의 제3자 제공</h4>
                 <p>"(유)부울경태양광"은 개인정보를 “1. 개인정보의 처리목적”에서 고지한 범위 내에서 사용하며, 정보주체의 사전 동의 없이는 동 범위를 초과하여 이용하거나 원칙적으로 개인정보를 외부에 공개하지 않습니다. 다만 아래의 경우는 예외로 합니다.</p>
                 <div class="mt-2 pl-2 border-l-2 border-gray-100 italic">
                     가. 정보주체가 사전에 동의한 경우<br>
                     나. 법령의 규정에 의거하거나, 수사 목적으로 법령에 정해진 절차와 방법에 따라 수사기관의 요구가 있는 경우<br>
-                    다. 분양 관련 정보 안내를 위한 개인정보 제공
+                    다. 상담 관련 정보 안내를 위한 개인정보 제공
                 </div>
             </section>
-
             <section>
                 <h4 class="font-bold text-gray-800 mb-2">▶ 수집하는 개인정보의 항목</h4>
                 <p>- 제목, 문의구분, 전화번호, 문의내용</p>
             </section>
-
             <section>
                 <h4 class="font-bold text-gray-800 mb-2">▶ 개인정보의 보유 및 이용 기간</h4>
                 <p>- 원활한 서비스를 제공하기 위해 상담 완료 후 <span class="text-red-600 font-semibold">12개월간</span> 보존합니다.</p>
                 <p>- 다만 정보 제공자의 폐기 요청 시 지체 없이 파기합니다.</p>
             </section>
-
             <div class="bg-gray-50 p-4 rounded-md border border-gray-100">
                 <p>※ 귀하는 위와 같은 개인정보 수집, 이용에 동의하지 않으실 수 있습니다. 다만, 개인정보 수집을 거부할 경우 최신 정보 제공이 어려울 수 있습니다.</p>
             </div>
         </div>
-
         <div class="px-6 py-4 border-t border-gray-200 text-right">
-            <button
-                    id="agreeAndCloseBtn"
-                    class="bg-gray-800 hover:bg-black text-white px-6 py-2 rounded font-medium transition duration-200">
+            <button id="agreeAndCloseBtn" class="bg-gray-800 hover:bg-black text-white px-6 py-2 rounded font-medium transition duration-200">
                 확인 및 닫기
             </button>
         </div>
@@ -953,14 +945,15 @@
                             class="w-full px-4 py-2 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500 resize-none"
                             required></textarea>
                     </div>
-
-                    <div>
-                        <input type="checkbox" name="" id="">
+                    <div class="flex justify-between">
+                        <div>
+                            <p>* 개인정보 수집에 동의합니다&nbsp;&nbsp;</p>
+                            <input class="form-checkbox h-5 w-5 text-blue-600" type="checkbox">
+                        </div>
                         <button id="modalButton" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300">
                             개인정보 수집 및 이용 동의 보기
                         </button>
                     </div>
-
                     <button type="submit" id="submitBtn"
                         class="w-full bg-blue-600 text-white font-bold py-3 rounded-md hover:bg-blue-700 transition flex justify-center items-center gap-2">
                         <span>제출하기</span>
