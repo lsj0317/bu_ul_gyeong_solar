@@ -104,38 +104,36 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   window.switchTab = (targetId) => document.querySelector(`.tab-btn[data-target="${targetId}"]`)?.click();
   
-  // 특정 ID를 가진 input 요소를 가져옵니다.
-  const phoneNumberInput = document.getElementById('phoneNumberInput');
-  const phoneNumberInput2 = document.getElementById('phoneNumberInput2');
-  let inputTarget;
+  // 입력된 전화번호 문자열에 자동으로 하이픈을 추가하는 함수
+  function formatPhoneNumber(value) {
+    // 숫자 이외의 문자 제거
+    const cleaned = value.replace(/[^0-9]/g, '');
+    let formatted = '';
 
-  if(phoneNumberInput.id.includes("phoneNumber")) {
-    inputTarget = phoneNumberInput;
-  } else if(phoneNumberInput2.id.includes("phoneNumber")) {
-    inputTarget = phoneNumberInput2;
+    // 입력된 숫자의 길이에 따라 하이픈 위치 결정
+    if (cleaned.length < 4) {
+        formatted = cleaned;
+    } else if (cleaned.length < 8) {
+        formatted = cleaned.substring(0, 3) + '-' + cleaned.substring(3);
+    } else {
+        formatted = cleaned.substring(0, 3) + '-' + cleaned.substring(3, 7) + '-' + cleaned.substring(7, 11);
+    }
+
+    return formatted;
   }
 
-  // 전화번호 입력 시 하이픈 자동 추가
-  inputTarget.addEventListener('input', function(event) {
-    let value = event.target.value;
+  function handleInputWithHyphen(event) {
+    const inputElement = event.target;
+    // 현재 입력란의 값에 포맷팅 함수 적용
+    inputElement.value = formatPhoneNumber(inputElement.value);
+  }
 
-    // 숫자 이외의 문자(하이픈 포함)를 모두 제거합니다.
-    value = value.replace(/[^0-9]/g, '');
-
-    // 전화번호 형식에 맞게 하이픈을 추가합니다.
-    if (value.length < 4) {
-        // 3자리 이하일 경우 하이픈 없음
-    } else if (value.length < 8) {
-        // 4~7자리: "010-1234" 또는 "02-1234" 등
-        value = value.replace(/(\d{3})(\d{1,4})/, '$1-$2');
-    } else {
-        // 8자리 이상 (일반적인 휴대폰 번호 11자리 기준): "010-1234-5678"
-        value = value.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-    }
-    // 정규식에 따라 하이픈이 들어간 최종 값을 input에 설정합니다.
-    event.target.value = value;
+  // 특정 class를 가진 input 요소를 가져옵니다.
+  const phoneInputs = document.querySelectorAll('.phone-input');
+  phoneInputs.forEach(input => {
+      // 사용자가 입력할 때마다 함수가 실행되도록 'input' 이벤트 사용
+      input.addEventListener('input', handleInputWithHyphen);
   });
-
 
   /** Google Sheets Logic **/
   const inquiryForm = document.getElementById("inquiryForm");
